@@ -8,20 +8,21 @@ from box import ConfigBox
 from pathlib import Path
 from typing import Any
 
-@ensure_annotations  # decorator
+
+
+@ensure_annotations
 def read_yaml(path_to_yaml: Path) -> ConfigBox:
-    """
-    Reads a YAML file and returns its content as a ConfigBox object.
+    """reads yaml file and returns
 
     Args:
-        path_to_yaml (Path): The path to the YAML file.
+        path_to_yaml (str): path like input
 
     Raises:
-        ValueError: If the YAML file is empty.
-        Exception: Any other exception that occurs during file reading or parsing.
+        ValueError: if yaml file is empty
+        e: empty file
 
     Returns:
-        ConfigBox: The content of the YAML file as a ConfigBox object.
+        ConfigBox: ConfigBox type
     """
     try:
         with open(path_to_yaml) as yaml_file:
@@ -32,36 +33,35 @@ def read_yaml(path_to_yaml: Path) -> ConfigBox:
         raise ValueError("yaml file is empty")
     except Exception as e:
         raise e
+    
+
 
 @ensure_annotations
-def create_directories(path_to_directories: list, verbose=True) -> None:
-    """
-    Creates a list of directories specified in the given path list.
+def create_directories(path_to_directories: list, verbose=True):
+    """create list of directories
 
     Args:
-        path_to_directories (list): A list of paths to directories to be created.
-        verbose (bool, optional): If True, logs the creation of each directory. Defaults to True.
-
-    Returns:
-        None: This function does not return any value.
+        path_to_directories (list): list of path of directories
+        ignore_log (bool, optional): ignore if multiple dirs is to be created. Defaults to False.
     """
     for path in path_to_directories:
         os.makedirs(path, exist_ok=True)
         if verbose:
-            logger.info(f"Created directory at: {path}")
+            logger.info(f"created directory at: {path}")
+
+
 
 @ensure_annotations
 def get_size(path: Path) -> str:
-    """
-    Get the size of a file in kilobytes (KB).
+    """get size in KB
 
     Args:
-        path (Path): The path to the file for which the size needs to be calculated.
+        path (Path): path of the file
 
     Returns:
-        str: The size of the file in kilobytes, formatted as a string with a tilde prefix.
+        str: size in KB
     """
-
     size_in_kb = round(os.path.getsize(path)/1024)
-    return f"~{size_in_kb} KB"
+    return f"~ {size_in_kb} KB"
 
+    
